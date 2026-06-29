@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非洲 & SSA/EE1 学生需求洞察 — 个人知识库功能规划报告（V2）</title>
+<style>
+  :root {
+    --purple: #534AB7;
+    --purple-light: #7F77DD;
+    --blue: #185FA5;
+    --blue-light: #378ADD;
+    --green: #0F6E56;
+    --green-light: #1D9E75;
+    --red: #D94F4F;
+    --orange: #E8853D;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #E8E8E8;
+    --gray-300: #D0D0D0;
+    --gray-500: #888;
+    --gray-700: #555;
+    --gray-900: #222;
+    --font-sans: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: #F0F2F5;
+    color: var(--gray-900);
+    line-height: 1.7;
+  }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    background: linear-gradient(135deg, #1a1050 0%, #534AB7 50%, #185FA5 100%);
+    color: #fff;
+    padding: 64px 40px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.35;
+    max-width: 700px;
+    margin: 0 auto 16px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    opacity: 0.82;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+  .cover-meta {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .cover-meta span {
+    font-size: 13px;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ---------- Layout ---------- */
+  .page { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 40px 44px;
+    margin: 32px 0;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 28px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: 24px 0;
+  }
+
+  /* ---------- Tables ---------- */
+  .tbl-wrap { overflow-x: auto; margin: 20px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: var(--gray-100);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+    color: var(--gray-700);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAFAFF; }
+
+  /* ---------- Insight Cards ---------- */
+  .insight-card {
+    background: var(--gray-50);
+    border-left: 4px solid var(--purple);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 18px 0;
+    position: relative;
+  }
+  .insight-card .ic-num {
+    position: absolute;
+    top: 14px; right: 18px;
+    font-size: 28px;
+    font-weight: 800;
+    color: rgba(83,74,183,0.10);
+  }
+  .insight-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 8px;
+  }
+  .insight-card p {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.7;
+  }
+  .insight-card .tag {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-top: 8px;
+  }
+
+  /* ---------- Comparison Grid ---------- */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .comp-box {
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .comp-box::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 10px; right: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.35;
+    letter-spacing: 1px;
+  }
+  .comp-box h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .comp-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .comp-box ul li {
+    font-size: 13px;
+    padding: 4px 0 4px 18px;
+    position: relative;
+    color: var(--gray-700);
+  }
+  .comp-box ul li::before {
+    content: '•';
+    position: absolute;
+    left: 4px;
+    font-weight: 700;
+  }
+  .comp-ssa { background: #F8F7FE; border: 1px solid #E8E5FD; }
+  .comp-ssa h5 { color: var(--purple); }
+  .comp-ssa ul li::before { color: var(--purple); }
+  .comp-ee1 { background: #F0F7FE; border: 1px solid #D6EBFD; }
+  .comp-ee1 h5 { color: var(--blue); }
+  .comp-ee1 ul li::before { color: var(--blue); }
+
+  /* ---------- Funnel Diagram (SVG inline) ---------- */
+  .viz-wrap {
+    background: var(--gray-50);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .viz-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- Architecture Diagram ---------- */
+  .arch-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .arch-app  { background: #F8F7FE; border: 1.5px solid #D8D3F8; }
+  .arch-eng  { background: #F0F7FE; border: 1.5px solid #C8E1FD; }
+  .arch-ctx  { background: #EDF7F3; border: 1.5px solid #B8E8D4; }
+  .arch-base { background: #FFF8EE; border: 1.5px solid #FCE5C4; }
+  .arch-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .arch-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .arch-chip {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .chip-purple { background: #E8E5FD; color: #3C3489; }
+  .chip-blue   { background: #D6EBFD; color: #0C447C; }
+  .chip-green  { background: #CEF0E2; color: #085041; }
+  .chip-orange { background: #FCE5C4; color: #8A5500; }
+  .arch-arrow {
+    text-align: center;
+    color: var(--gray-300);
+    font-size: 18px;
+    padding: 2px 0;
+  }
+
+  /* ---------- Priority Matrix ---------- */
+  .pri-matrix { margin: 20px 0; }
+  .pri-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 6px 0;
+    gap: 12px;
+  }
+  .pri-P0 { background: #FEF0F0; border-left: 4px solid var(--red); }
+  .pri-P1 { background: #FFF8EE; border-left: 4px solid var(--orange); }
+  .pri-P2 { background: #F8F7FE; border-left: 4px solid var(--purple-light); }
+  .pri-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+    min-width: 52px;
+    text-align: center;
+  }
+  .badge-P0 { background: var(--red); color: #fff; }
+  .badge-P1 { background: var(--orange); color: #fff; }
+  .badge-P2 { background: var(--purple-light); color: #fff; }
+  .pri-name { font-size: 13.5px; color: var(--gray-900); flex: 1; }
+  .pri-coverage { font-size: 12px; color: var(--gray-500); }
+
+  /* ---------- Decision Cards ---------- */
+  .dec-card {
+    background: var(--gray-50);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 14px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .dec-num {
+    min-width: 36px; height: 36px;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .dec-body h5 { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+  .dec-body p { font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+
+  /* ---------- Quote Block ---------- */
+  .quote-block {
+    background: linear-gradient(135deg, #F8F7FE, #F0F7FE);
+    border-left: 4px solid var(--purple);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 14.5px;
+    color: var(--gray-700);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* ---------- Product Phase Tabs ---------- */
+  .phase-tabs { display: flex; gap: 0; margin: 20px 0 0; }
+  .phase-tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px 10px 0 0;
+    cursor: default;
+  }
+  .phase-1 { background: var(--purple); color: #fff; }
+  .phase-2 { background: var(--blue); color: #fff; }
+  .phase-3 { background: var(--green); color: #fff; }
+  .phase-panel {
+    border-radius: 0 0 12px 12px;
+    padding: 24px;
+    background: var(--gray-50);
+    border: 1.5px solid var(--gray-200);
+    border-top: none;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+
+  /* ---------- SVG diagram styles ---------- */
+  .svg-diagram { display: block; margin: 0 auto; }
+  .svg-diagram text { font-family: var(--font-sans); }
+</style>
+</head>
+<body>
+
+<!-- ========== COVER ========== -->
+<div class="cover" id="cover">
+  <div class="cover-badge">Product Requirements Report · V2</div>
+  <h1>非洲 &amp; EE1 学生需求洞察<br>个人知识库功能规划报告</h1>
+  <p class="cover-sub">基于【用研洞察】学习场景机会日志跟踪研究（2026年6月）<br>研究范围：SSA（尼日利亚+肯尼亚，52人）、EE1（29人）</p>
+  <div class="cover-meta">
+    <span>&#128218; 日志跟踪 2-3 周</span>
+    <span>&#128200; 有效样本 81 人</span>
+    <span>&#128640; 6 大需求共性</span>
+    <span>&#128736; 1+3+N 产品架构</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ========== SECTION 1 ========== -->
+<section id="sec1">
+  <div class="section-tag">Overview</div>
+  <h2 class="section-title">一、核心事实速览</h2>
+  <p class="section-desc">SSA 与 EE1 两地学生在学习方式、痛点、AI 使用行为上的关键差异与共性</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>SSA（尼日利亚+肯尼亚）</th>
+          <th>EE1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>课堂掌握度</strong></td><td>尼日利亚 20-40%<br>肯尼亚 40-60%</td><td>依赖手写速记，课后理解率低</td></tr>
+        <tr><td><strong>核心学习模式</strong></td><td>过往试卷 + 讲义 PDF 驱动</td><td>教师私域材料 + 手写笔记驱动</td></tr>
+        <tr><td><strong>最大痛点</strong></td><td>学不懂，靠自学 + AI 填补</td><td>形式僵化，考核高压，应试驱动</td></tr>
+        <tr><td><strong>资料存储</strong></td><td>WhatsApp + 手机（移动端为主）</td><td>多端分散（手机+PC，纸质+电子+截图）</td></tr>
+        <tr><td><strong>AI 使用率</strong></td><td>几乎全员使用（gpt、gemini、deepseek等）</td><td>几乎全员使用，但使用深度不一</td></tr>
+        <tr><td><strong>AI 最大 gap</strong></td><td>输出泛化、缺乏课程针对性</td><td>不贴合考纲、格式规范性差</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Key stat boxes -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;">
+    <div style="background:linear-gradient(135deg,#534AB7,#7F77DD);border-radius:12px;padding:20px 18px;color:#fff;text-align:center;">
+      <div style="font-size:28px;font-weight:800;">81</div>
+      <div style="font-size:12px;opacity:0.8;margin-top:4px;">有效研究样本</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#185FA5,#378ADD);border-radius:12px;padding:20px 18px;color:#fff;text-align:center;">
+      <div style="font-size:28px;font-weight:800;">20-60%</div>
+      <div style="font-size:12px;opacity:0.8;margin-top:4px;">课堂理解率</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#0F6E56,#1D9E75);border-radius:12px;padding:20px 18px;color:#fff;text-align:center;">
+      <div style="font-size:28px;font-weight:800;">6</div>
+      <div style="font-size:12px;opacity:0.8;margin-top:4px;">需求共性</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#D94F4F,#E8853D);border-radius:12px;padding:20px 18px;color:#fff;text-align:center;">
+      <div style="font-size:28px;font-weight:800;">3</div>
+      <div style="font-size:12px;opacity:0.8;margin-top:4px;">AI 方向</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 2 ========== -->
+<section id="sec2">
+  <div class="section-tag">Insights</div>
+  <h2 class="section-title">二、两地学生需求共性深度提炼</h2>
+  <p class="section-desc">通过 81 份日志跟踪研究，识别出 6 条跨地区需求共性，是个人知识库产品设计的核心依据</p>
+
+  <!-- Insight 1 -->
+  <div class="insight-card">
+    <div class="ic-num">1</div>
+    <h4>&#127891; 「学不懂」是首要矛盾 → 知识讲解是最高频刚需</h4>
+    <p>两地学生课堂实际理解率远低于及格线。SSA 学生课堂只理解 20-60%，EE1 学生因纯口述 + 手写模式，课后信息损耗严重。</p>
+    <p style="margin-top:8px;"><strong>关键洞察：</strong>现有 AI 给的是 "summary"，学生要的是 "tutorial"。这是个人知识库最核心的价值差异点。</p>
+    <span class="tag">统一诉求：逐知识点展开讲解 + 举例 + 出题测试</span>
+  </div>
+
+  <!-- Insight 2 -->
+  <div class="insight-card" style="border-left-color:#185FA5;">
+    <div class="ic-num">2</div>
+    <h4 style="color:#185FA5;">&#128193; 学习资料四散、格式混杂 → 统一归集 + 智能整理是刚需</h4>
+    <div class="comp-grid">
+      <div class="comp-box comp-ssa" data-label="SSA">
+        <h5>SSA 资料来源</h5>
+        <ul>
+          <li>WhatsApp 群 / 自发送</li>
+          <li>手机下载 + 拍照截图</li>
+          <li>Google Drive</li>
+          <li>大量手写体 / 模糊拍照</li>
+        </ul>
+      </div>
+      <div class="comp-box comp-ee1" data-label="EE1">
+        <h5>EE1 资料来源</h5>
+        <ul>
+          <li>纸质笔记拍照</li>
+          <li>电子文档 + 截图</li>
+          <li>教师私域材料</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>共性问题：</strong>无整理习惯 + 手机端为主 + 非标格式多</p>
+    <p style="margin-top:8px;"><strong>统一诉求：</strong>多渠道资料一键导入 → AI 自动按课程 / 章节归类 → 关键词搜索定位</p>
+    <span class="tag" style="background:#185FA5;">两地均有此痛点，需统一解决</span>
+  </div>
+
+  <!-- Insight 3 -->
+  <div class="insight-card" style="border-left-color:#0F6E56;">
+    <div class="ic-num">3</div>
+    <h4 style="color:#0F6E56;">&#128221; 考试高压驱动学习行为 → 备考是峰值场景</h4>
+    <div class="comp-grid">
+      <div class="comp-box comp-ssa" data-label="SSA">
+        <h5>考试模式</h5>
+        <ul>
+          <li>CAT / CA / quizzes</li>
+          <li>Final Exam（占 60-70%）</li>
+          <li>过往试题是核心资产</li>
+        </ul>
+      </div>
+      <div class="comp-box comp-ee1" data-label="EE1">
+        <h5>考试模式</h5>
+        <ul>
+          <li>高频随堂抽查</li>
+          <li>期末 3 周内考完 5-7 门</li>
+          <li>口试（EE1特色）</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>统一诉求：</strong>上传学习资料 → AI 圈定考试范围 → 生成重点提纲 + 模拟题 + 解析 → 根据剩余时间动态调整复习策略</p>
+    <span class="tag" style="background:#0F6E56;">峰值场景：考试密集期 = AI 使用高峰期</span>
+  </div>
+
+  <!-- Insight 4 -->
+  <div class="insight-card" style="border-left-color:#D94F4F;">
+    <div class="ic-num">4</div>
+    <h4 style="color:#D94F4F;">&#129504; AI 输出太泛、不贴合 → 缺乏三层 Context</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Context 层</th><th>SSA 表现</th><th>EE1 表现</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>课程 Context</strong></td><td>没拿到学生课程资料，回答无针对性</td><td>无法对齐本地教材和教师要求</td></tr>
+          <tr><td><strong>学生个体 Context</strong></td><td>基础差，需用更简单语言 + 分步讲解</td><td>需匹配学生能力水平</td></tr>
+          <tr><td><strong>学校 / 教师 Context</strong></td><td>作业格式、考试要求、查重标准</td><td>教师模板、格式规范极严格、口试要求</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px;"><strong>关键判断：</strong>知识库的价值不在于存储，而在于让 AI 的每次输出都基于这三层上下文。</p>
+    <span class="tag" style="background:#D94F4F;">Context 层是"好用"与"能用"的分水岭</span>
+  </div>
+
+  <!-- Insight 5 -->
+  <div class="insight-card" style="border-left-color:#E8853D;">
+    <div class="ic-num">5</div>
+    <h4 style="color:#E8853D;">&#9997; 写作是长链路痛点 → 需要工具链而非单点功能</h4>
+    <p>痛点链路：审题（不知道scope）→ 找文献（来源可信度）→ 结构框架（逻辑论证展开）→ 学术表达（语言润色）→ 引用格式（规范对齐）→ 查重+AI检测</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;">
+      <span class="arch-chip chip-purple">审题（不知道 scope）</span>
+      <span class="arch-chip chip-purple">找文献（来源可信度）</span>
+      <span class="arch-chip chip-purple">结构框架（逻辑论证）</span>
+      <span class="arch-chip chip-purple">学术表达（语言润色）</span>
+      <span class="arch-chip chip-purple">引用格式（规范对齐）</span>
+      <span class="arch-chip chip-purple">查重 + AI 检测</span>
+    </div>
+    <p><strong>统一诉求：</strong>不是要一个"帮我写"的按钮，而是覆盖写作全链路的辅助工具，且输出必须符合本地学术规范。</p>
+  </div>
+
+  <!-- Insight 6 -->
+  <div class="insight-card" style="border-left-color:#7F77DD;">
+    <div class="ic-num">6</div>
+    <h4 style="color:#7F77DD;">&#127758; 本地化缺失 → 通用 AI 不懂"我们这儿的规矩"</h4>
+    <div class="comp-grid">
+      <div class="comp-box comp-ssa" data-label="SSA">
+        <h5>本地化需求</h5>
+        <ul>
+          <li>肯尼亚 / 尼日利亚本地案例</li>
+          <li>本地现实场景举例</li>
+          <li>贴合本地考试局考纲</li>
+        </ul>
+      </div>
+      <div class="comp-box comp-ee1" data-label="EE1">
+        <h5>本地化需求</h5>
+        <ul>
+          <li>符合EE1写作规范</li>
+          <li>教师私域材料对齐</li>
+          <li>口试逻辑和流程</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>统一诉求：</strong>AI 需要"懂本地"，不仅是语言层面的本地化，更是教育制度、考核标准、学术规范层面的本地化。</p>
+  </div>
+</section>
+
+<!-- ========== SECTION 3 ========== -->
+<section id="sec3">
+  <div class="section-tag">Methodology</div>
+  <h2 class="section-title">三、学生共性需求 → AI 能力推导</h2>
+  <p class="section-desc">"三层漏斗"需求抽象模型 —— 从场景到任务到能力，系统化推导统一 AI 能力</p>
+
+  <!-- Funnel Diagram SVG -->
+  <div class="viz-wrap">
+    <div class="viz-title">需求抽象三层漏斗模型</div>
+    <svg class="svg-diagram" width="680" height="340" viewBox="0 0 680 340">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#534AB7"/>
+          <stop offset="100%" style="stop-color:#7F77DD"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#185FA5"/>
+          <stop offset="100%" style="stop-color:#378ADD"/>
+        </linearGradient>
+        <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0F6E56"/>
+          <stop offset="100%" style="stop-color:#1D9E75"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Layer 1 -->
+      <rect x="40" y="20" width="600" height="80" rx="12" fill="url(#g1)" opacity="0.95"/>
+      <text x="340" y="50" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Layer 1：场景层（What）</text>
+      <text x="340" y="74" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="12.5">学生在什么场景下用？</text>
+      <rect x="80" y="90" width="140" height="36" rx="6" fill="#E8E5FD"/>
+      <text x="150" y="113" text-anchor="middle" fill="#3C3489" font-size="11.5">上课听不懂</text>
+      <rect x="240" y="90" width="140" height="36" rx="6" fill="#E8E5FD"/>
+      <text x="310" y="113" text-anchor="middle" fill="#3C3489" font-size="11.5">考前突击</text>
+      <rect x="400" y="90" width="140" height="36" rx="6" fill="#E8E5FD"/>
+      <text x="470" y="113" text-anchor="middle" fill="#3C3489" font-size="11.5">资料管理</text>
+      <rect x="550" y="90" width="130" height="36" rx="6" fill="#E8E5FD"/>
+      <text x="615" y="113" text-anchor="middle" fill="#3C3489" font-size="11.5">作业写作</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 340 130 L 340 150" stroke="#534AB7" stroke-width="2" fill="none" marker-end="url(#a1)"/>
+      <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#534AB7"/></marker></defs>
+
+      <!-- Layer 2 -->
+      <rect x="40" y="152" width="600" height="80" rx="12" fill="url(#g2)" opacity="0.95"/>
+      <text x="340" y="182" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Layer 2：任务层（How）</text>
+      <text x="340" y="206" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="12.5">学生要完成什么任务？</text>
+      <rect x="100" y="222" width="160" height="36" rx="6" fill="#D6EBFD"/>
+      <text x="180" y="245" text-anchor="middle" fill="#0C447C" font-size="11.5">抽象为统一任务</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 340 232 L 340 252" stroke="#185FA5" stroke-width="2" fill="none" marker-end="url(#a2)"/>
+      <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#185FA5"/></marker></defs>
+
+      <!-- Layer 3 -->
+      <rect x="40" y="254" width="600" height="70" rx="12" fill="url(#g3)" opacity="0.95"/>
+      <text x="340" y="282" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Layer 3：能力层（Why）</text>
+      <text x="340" y="306" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="12.5">底层需要什么 AI 能力？</text>
+
+      <!-- Connecting lines from Layer1 items to Layer2 -->
+      <path d="M 150 126 L 150 148 L 200 148 L 200 152" stroke="#AAA" stroke-width="1.2" fill="none" stroke-dasharray="4"/>
+      <path d="M 310 126 L 310 148 L 280 148 L 280 152" stroke="#AAA" stroke-width="1.2" fill="none" stroke-dasharray="4"/>
+      <path d="M 470 126 L 470 148 L 380 148 L 380 152" stroke="#AAA" stroke-width="1.2" fill="none" stroke-dasharray="4"/>
+      <path d="M 615 126 L 615 148 L 460 148 L 460 152" stroke="#AAA" stroke-width="1.2" fill="none" stroke-dasharray="4"/>
+    </svg>
+  </div>
+
+  <!-- Application table -->
+  <div class="tbl-wrap" style="margin-top:20px;">
+    <table>
+      <thead>
+        <tr><th>场景（SSA）</th><th>场景（EE1）</th><th>统一任务</th><th>所需 AI 能力</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>上课听不懂</strong></td>
+          <td>手写后找AI追问</td>
+          <td><span style="color:var(--purple);font-weight:600;">知识讲解</span></td>
+          <td>分步推导 + 举例说明 + 练习生成</td>
+        </tr>
+        <tr>
+          <td><strong>考前突击</strong></td>
+          <td>期末3周考7门</td>
+          <td><span style="color:var(--blue);font-weight:600;">智能备考</span></td>
+          <td>考点分析 + 试题精讲 + 复习计划</td>
+        </tr>
+        <tr>
+          <td><strong>资料管理</strong></td>
+          <td>纸质电子混杂</td>
+          <td><span style="color:var(--green);font-weight:600;">资料归集</span></td>
+          <td>OCR识别 + 自动归类 + 语义搜索</td>
+        </tr>
+        <tr>
+          <td><strong>作业写作</strong></td>
+          <td>学术写作格式严格</td>
+          <td><span style="color:var(--orange);font-weight:600;">学术写作</span></td>
+          <td>审题 + 改写 + 引用格式 + AI检测</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quote-block">
+    <strong>PM 核心判断：</strong>不做两套产品，通过 Context 配置层适配不同地区。底层能力统一，差异在配置。
+  </div>
+</section>
+
+<!-- ========== SECTION 4 ========== -->
+<section id="sec4">
+  <div class="section-tag">Architecture</div>
+  <h2 class="section-title">四、个人知识库统一功能规划</h2>
+  <p class="section-desc">总体架构："1 个底座 + 3 大方向 + N 个场景应用"，通过 Context 配置层实现跨地区统一</p>
+
+  <!-- Architecture Diagram SVG -->
+  <div class="viz-wrap">
+    <div class="viz-title">产品总体架构图（1 + 3 + N）</div>
+    <svg class="svg-diagram" width="680" height="520" viewBox="0 0 680 520">
+      <defs>
+        <linearGradient id="ag1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#534AB7"/><stop offset="100%" style="stop-color:#7F77DD"/>
+        </linearGradient>
+        <linearGradient id="ag2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#185FA5"/><stop offset="100%" style="stop-color:#378ADD"/>
+        </linearGradient>
+        <linearGradient id="ag3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0F6E56"/><stop offset="100%" style="stop-color:#1D9E75"/>
+        </linearGradient>
+        <linearGradient id="ag4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#D94F4F"/><stop offset="100%" style="stop-color:#E8853D"/>
+        </linearGradient>
+      </defs>
+
+      <!-- App Layer -->
+      <rect x="40" y="20" width="600" height="70" rx="12" fill="url(#ag1)" opacity="0.92"/>
+      <text x="340" y="48" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">N 个场景应用</text>
+      <rect x="80" y="60" width="100" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="130" y="77" text-anchor="middle" fill="#fff" font-size="11">知识讲解</text>
+      <rect x="200" y="60" width="100" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="250" y="77" text-anchor="middle" fill="#fff" font-size="11">智能备考</text>
+      <rect x="320" y="60" width="100" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="370" y="77" text-anchor="middle" fill="#fff" font-size="11">写作辅助</text>
+      <rect x="440" y="60" width="100" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="490" y="77" text-anchor="middle" fill="#fff" font-size="11">资料管理</text>
+
+      <!-- Arrow -->
+      <path d="M 340 92 L 340 108" stroke="#534AB7" stroke-width="2" fill="none" marker-end="url(#aa1)"/>
+      <defs><marker id="aa1" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#534AB7"/></marker></defs>
+
+      <!-- Engine Layer -->
+      <rect x="40" y="110" width="600" height="70" rx="12" fill="url(#ag2)" opacity="0.92"/>
+      <text x="340" y="138" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">三大 AI 方向</text>
+      <rect x="110" y="150" width="130" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="175" y="167" text-anchor="middle" fill="#fff" font-size="11">讲解方向</text>
+      <rect x="275" y="150" width="130" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="340" y="167" text-anchor="middle" fill="#fff" font-size="11">备考方向</text>
+      <rect x="440" y="150" width="130" height="26" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="505" y="167" text-anchor="middle" fill="#fff" font-size="11">写作方向</text>
+
+      <!-- Arrow -->
+      <path d="M 340 182 L 340 198" stroke="#185FA5" stroke-width="2" fill="none" marker-end="url(#aa2)"/>
+      <defs><marker id="aa2" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#185FA5"/></marker></defs>
+
+      <!-- Context Layer (KEY) -->
+      <rect x="40" y="200" width="600" height="80" rx="12" fill="url(#ag3)" opacity="0.92"/>
+      <text x="340" y="230" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Context 配置层（关键！）</text>
+      <rect x="80" y="240" width="120" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="140" y="258" text-anchor="middle" fill="#fff" font-size="10.5">课程资料</text>
+      <rect x="220" y="240" width="120" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="280" y="258" text-anchor="middle" fill="#fff" font-size="10.5">学生画像</text>
+      <rect x="360" y="240" width="120" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="420" y="258" text-anchor="middle" fill="#fff" font-size="10.5">学校规范</text>
+      <rect x="500" y="240" width="120" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="560" y="258" text-anchor="middle" fill="#fff" font-size="10.5">本地化知识</text>
+
+      <!-- Arrow -->
+      <path d="M 340 284 L 340 300" stroke="#0F6E56" stroke-width="2" fill="none" marker-end="url(#aa3)"/>
+      <defs><marker id="aa3" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#0F6E56"/></marker></defs>
+
+      <!-- Base Layer -->
+      <rect x="40" y="302" width="600" height="80" rx="12" fill="url(#ag4)" opacity="0.92"/>
+      <text x="340" y="330" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">知识库底座（资料入库 + 管理）</text>
+      <rect x="70" y="342" width="120" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="130" y="360" text-anchor="middle" fill="#fff" font-size="10.5">多渠道导入</text>
+      <rect x="210" y="342" width="100" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="260" y="360" text-anchor="middle" fill="#fff" font-size="10.5">自动归类</text>
+      <rect x="330" y="342" width="100" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="380" y="360" text-anchor="middle" fill="#fff" font-size="10.5">OCR 识别</text>
+      <rect x="450" y="342" width="100" height="28" rx="5" fill="rgba(255,255,255,0.22)"/>
+      <text x="500" y="360" text-anchor="middle" fill="#fff" font-size="10.5">语义搜索</text>
+
+      <!-- Region adaptation note -->
+      <rect x="60" y="410" width="560" height="90" rx="12" fill="#F8F7FE" stroke="#D8D3F8" stroke-width="1.5"/>
+      <text x="80" y="438" fill="#3C3489" font-size="13" font-weight="700">&#127760; 跨地区适配方案</text>
+      <text x="80" y="460" fill="#555" font-size="12">Context 配置层可通过预设"地区模板"实现差异化适配，无需开发两套产品：</text>
+      <rect x="80" y="468" width="120" height="24" rx="5" fill="#E8E5FD"/>
+      <text x="140" y="484" text-anchor="middle" fill="#3C3489" font-size="11" font-weight="600">SSA 模板</text>
+      <rect x="216" y="468" width="120" height="24" rx="5" fill="#D6EBFD"/>
+      <text x="276" y="484" text-anchor="middle" fill="#0C447C" font-size="11" font-weight="600">EE1 模板</text>
+      <text x="356" y="480" fill="#888" font-size="11">可根据市场拓展持续增加……</text>
+
+      <!-- Legend -->
+      <rect x="40" y="510" width="12" height="12" rx="3" fill="#534AB7"/>
+      <text x="58" y="521" fill="#888" font-size="11">场景应用</text>
+      <rect x="160" y="510" width="12" height="12" rx="3" fill="#185FA5"/>
+      <text x="178" y="521" fill="#888" font-size="11">AI 方向</text>
+      <rect x="270" y="510" width="12" height="12" rx="3" fill="#0F6E56"/>
+      <text x="288" y="521" fill="#888" font-size="11">Context 层</text>
+      <rect x="380" y="510" width="12" height="12" rx="3" fill="#D94F4F"/>
+      <text x="398" y="521" fill="#888" font-size="11">知识库底座</text>
+    </svg>
+  </div>
+
+  <!-- Phase Tabs -->
+  <div class="phase-tabs">
+    <div class="phase-tab phase-1">阶段 1.0 — 底座</div>
+    <div class="phase-tab phase-2">阶段 2.0 — 方向</div>
+    <div class="phase-tab phase-3">阶段 3.0 — 深化</div>
+  </div>
+  <div class="phase-panel">
+    <h4 style="font-size:15px;font-weight:600;color:var(--purple);margin-bottom:14px;">阶段 1.0：知识库底座 — 解决「资料从哪里来、怎么管」</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>功能模块</th><th>具体能力</th><th>优先级</th></tr></thead>
+        <tbody>
+          <tr><td><strong>多渠道导入</strong></td><td>WhatsApp / Telegram 文件一键转发入库；手机相册 / 截图 / 拍照导入</td><td><span class="pri-badge badge-P0">P0</span></td></tr>
+          <tr><td><strong>自动归类</strong></td><td>AI 按课程名称、章节、资料类型（讲义 / 试卷 / 笔记 / 作业）自动分类打标签</td><td><span class="pri-badge badge-P0">P0</span></td></tr>
+          <tr><td><strong>多格式解析</strong></td><td>PDF / PPT / Word 解析 + 手写体 OCR（SSA 场景重点）+ 拍照模糊增强</td><td><span class="pri-badge badge-P0">P0</span></td></tr>
+          <tr><td><strong>语义搜索</strong></td><td>跨课程、跨格式的关键词搜索 + 语义搜索，精准定位知识点</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:14px;padding:12px 16px;background:#FEF9F0;border-radius:8px;font-size:13px;color:#8A5500;">
+      &#9888;&#65039; <strong>关键设计决策：</strong>移动端优先（SSA 学生几乎全在手机上操作）；导入即整理（学生无整理习惯）；手写识别是 SSA 的准入门槛
+    </div>
+  </div>
+
+  <!-- Engine details: 3 engines -->
+  <div style="margin-top:24px;">
+    <h4 style="font-size:15px;font-weight:600;color:var(--blue);margin-bottom:14px;">三大 AI 方向功能矩阵</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>方向</th><th>核心功能</th><th>描述</th><th>优先级</th></tr></thead>
+        <tbody>
+          <tr style="background:#F8F7FE;">
+            <td rowspan="4" style="font-weight:600;color:var(--purple);vertical-align:middle;text-align:center;">&#128218;<br>知识讲解<br>方向</td>
+            <td>知识点逐讲</td><td>上传讲义 PDF → AI 逐个知识点展开讲解（定义 → 推导 → 举例 → 应用），不是给 summary</td><td><span class="pri-badge badge-P0">P0</span></td>
+          </tr>
+          <tr style="background:#F8F7FE;"><td>分步推导</td><td>数学 / 公式 / 代码类，一步不跳地展示完整推导过程，关联前置知识点补基础</td><td><span class="pri-badge badge-P0">P0</span></td></tr>
+          <tr style="background:#F8F7FE;"><td>举一反三练习</td><td>学完一个知识点自动出同类题，做错继续出，直到掌握</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#F8F7FE;"><td>本地化案例</td><td>SSA 用肯尼亚 / 尼日利亚场景举例，EE1 用EE1场景举例</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#F0F7FE;">
+            <td rowspan="5" style="font-weight:600;color:var(--blue);vertical-align:middle;text-align:center;">&#128221;<br>智能备考<br>方向</td>
+            <td>往届试题精讲</td><td>上传 Past Questions → 逐题解析考点 + 出题规律 + 生成变式题</td><td><span class="pri-badge badge-P0">P0</span></td>
+          </tr>
+          <tr style="background:#F0F7FE;"><td>考点雷达</td><td>整合全部课程资料，标记高频考点 + 出处，生成考点分布图</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#F0F7FE;"><td>突击复习计划</td><td>"我还有 4 小时" → AI 规划：先过重点 → 做题 → 错题讲解 → 模考</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#F0F7FE;"><td>口试模拟（EE1）</td><td>随机抽问 + 连续追问 + 当场纠错，适配EE1口试模式</td><td><span class="pri-badge badge-P2">P2</span></td></tr>
+          <tr style="background:#F0F7FE;"><td>拍照检查纠错</td><td>拍手写作业 / 解题 → AI 精准标注错误 + 给出修正建议</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#EDF7F3;">
+            <td rowspan="4" style="font-weight:600;color:var(--green);vertical-align:middle;text-align:center;">&#9997;<br>学术写作<br>方向</td>
+            <td>写作审题与规范</td><td>输入作业要求 → AI 分析 scope / 结构 / 字数，按规范生成初稿</td><td><span class="pri-badge badge-P1">P1</span></td>
+          </tr>
+          <tr style="background:#EDF7F3;"><td>学术改写与校对</td><td>语法检查 + 用词优化 + 语体调整，逐条展示修改对比（接受 / 拒绝）</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#EDF7F3;"><td>AI 痕迹检测</td><td>预检测"AI 含量"，标记机器味句子，辅助改写</td><td><span class="pri-badge badge-P1">P1</span></td></tr>
+          <tr style="background:#EDF7F3;"><td>格式自动排版（EE1）</td><td>Word 智能排版、结构固化、EE1写作规范对齐</td><td><span class="pri-badge badge-P2">P2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Context Layer deep dive -->
+  <div style="margin-top:24px;">
+    <h4 style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:14px;">Context 配置层：产品好不好用的分水岭</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Context 维度</th><th>数据来源</th><th>AI 如何使用</th></tr></thead>
+        <tbody>
+          <tr><td><strong>课程 Context</strong></td><td>用户上传的讲义 / 试卷 / 笔记 / 课程大纲</td><td>限定 AI 输出范围，不自由发挥</td></tr>
+          <tr><td><strong>学生画像 Context</strong></td><td>学习进度记录、GPA、薄弱知识点、理解水平</td><td>匹配讲解难度和节奏</td></tr>
+          <tr><td><strong>学校规范 Context</strong></td><td>用户上传的作业模板 / 格式要求 / 评分标准 / 考试大纲</td><td>确保输出符合规范要求</td></tr>
+          <tr><td><strong>本地化 Context</strong></td><td>预设的地区知识库（SSA / EE1 教育体系差异）</td><td>举例本地化、术语本地化、标准对齐</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 5 ========== -->
+<section id="sec5">
+  <div class="section-tag">Priorities</div>
+  <h2 class="section-title">五、功能优先级矩阵</h2>
+  <p class="section-desc">基于需求共性强度、实现难度、用户价值三维评估得出的优先级排序</p>
+
+  <div class="pri-matrix">
+    <div style="font-size:12px;font-weight:600;color:var(--gray-500);margin-bottom:8px;letter-spacing:0.5px;">&#128308; P0 — 必须做（准入门槛）</div>
+    <div class="pri-row pri-P0">
+      <span class="pri-badge badge-P0">P0</span>
+      <span class="pri-name">多渠道资料导入 + 自动归类</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P0">
+      <span class="pri-badge badge-P0">P0</span>
+      <span class="pri-name">课程资料深度讲解（非摘要）</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P0">
+      <span class="pri-badge badge-P0">P0</span>
+      <span class="pri-name">分步推导 / 计算讲解</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P0">
+      <span class="pri-badge badge-P0">P0</span>
+      <span class="pri-name">手写体 OCR 识别</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P0">
+      <span class="pri-badge badge-P0">P0</span>
+      <span class="pri-name">往届试题精讲 + 考点分析</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--gray-500);margin:18px 0 8px;letter-spacing:0.5px;">&#128992; P1 — 重要（差异化竞争力）</div>
+    <div class="pri-row pri-P1">
+      <span class="pri-badge badge-P1">P1</span>
+      <span class="pri-name">举一反三练习生成</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P1">
+      <span class="pri-badge badge-P1">P1</span>
+      <span class="pri-name">考点雷达 + 突击复习计划</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P1">
+      <span class="pri-badge badge-P1">P1</span>
+      <span class="pri-name">拍照检查纠错</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+    <div class="pri-row pri-P1">
+      <span class="pri-badge badge-P1">P1</span>
+      <span class="pri-name">写作审题 + 改写 + AI 检测</span>
+      <span class="pri-coverage">SSA ✓ &nbsp; EE1 ✓</span>
+    </div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--gray-500);margin:18px 0 8px;letter-spacing:0.5px;">&#128309; P2 — 区域特色（分阶段拓展）</div>
+    <div class="pri-row pri-P2">
+      <span class="pri-badge badge-P2">P2</span>
+      <span class="pri-name">口试模拟（EE1 特色）</span>
+      <span class="pri-coverage">EE1 专属</span>
+    </div>
+    <div class="pri-row pri-P2">
+      <span class="pri-badge badge-P2">P2</span>
+      <span class="pri-name">格式自动排版（需分区域配置）</span>
+      <span class="pri-coverage">EE1 重点</span>
+    </div>
+    <div class="pri-row pri-P2">
+      <span class="pri-badge badge-P2">P2</span>
+      <span class="pri-name">本地化案例讲解（需分区域配置）</span>
+      <span class="pri-coverage">需分区域配置</span>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;padding:16px 20px;background:#F8F7FE;border-radius:10px;">
+    <h4 style="font-size:14px;font-weight:600;color:var(--purple);margin-bottom:10px;">优先级判断逻辑</h4>
+    <div class="tbl-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>层级</th><th>判断标准</th><th>示例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>P0</strong></td><td>两地共性痛点 + 无此功能产品无价值</td><td>资料导入、知识讲解、手写OCR</td></tr>
+          <tr><td><strong>P1</strong></td><td>两地共性需求 + 差异化竞争优势</td><td>备考计划、写作辅助、练习生成</td></tr>
+          <tr><td><strong>P2</strong></td><td>区域特色功能 + 分阶段拓展</td><td>口试模拟、本地化案例</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 6 ========== -->
+<section id="sec6">
+  <div class="section-tag">Decisions</div>
+  <h2 class="section-title">六、关键产品决策建议</h2>
+  <p class="section-desc">基于用研洞察提炼出的战略性产品决策，直接影响资源投入和方向选择</p>
+
+  <div class="dec-card">
+    <div class="dec-num">1</div>
+    <div class="dec-body">
+      <h5>决策1：先做深度，后做广度</h5>
+      <p>通用 AI 已经覆盖了广度。个人知识库的差异化价值在于基于用户资料的深度理解。先把「基于课程资料的深度讲解」做到极致，再拓展其他场景。</p>
+    </div>
+  </div>
+
+  <div class="dec-card">
+    <div class="dec-num">2</div>
+    <div class="dec-body">
+      <h5>决策2：移动端优先，资料导入体验是生死线</h5>
+      <p>SSA学生几乎全在手机端操作。如果导入体验不顺畅，知识库底座就建立不起来，上层AI能力再好也没用。必须支持 WhatsApp/Telegram 一键转发入知识库。</p>
+    </div>
+  </div>
+
+  <div class="dec-card">
+    <div class="dec-num">3</div>
+    <div class="dec-body">
+      <h5>决策3：Context层是做好用还是能用的分水岭</h5>
+      <p>学生不满的不是AI不够聪明，而是AI<strong>不懂他们的课、不懂他们的老师、不懂他们的考试</strong>。Context 配置层的完善程度，直接决定产品的口碑传播能力。</p>
+    </div>
+  </div>
+
+  <div class="dec-card">
+    <div class="dec-num">4</div>
+    <div class="dec-body">
+      <h5>决策4：不做两套产品，通过配置适配两地差异</h5>
+      <p>底层能力完全统一，通过 Context 配置层适配不同地区。SSA 和 EE1 的差异是配置差异，不是产品差异。这决定了研发效率和维护成本。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 7 ========== -->
+<section id="sec7">
+  <div class="section-tag">Summary</div>
+  <h2 class="section-title">七、总结</h2>
+
+  <div class="quote-block" style="font-size:15px;padding:24px 28px;background:linear-gradient(135deg,#F8F7FE,#F0F7FE);border-left-color:var(--purple);">
+    两地 81 名学生的日志跟踪研究揭示了一个清晰的图景：<br><br>
+    <strong>学生的核心需求不是在AI时代"学得更多"，而是在资源匮乏、教育体系僵化的现实中"学得懂、考得过"。</strong>
+  </div>
+
+  <div style="margin-top:24px;">
+    <h4 style="font-size:15px;font-weight:600;color:var(--gray-900);margin-bottom:14px;">个人知识库的价值主张</h4>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div style="background:linear-gradient(135deg,#F8F7FE,#EDE8FD);border-radius:12px;padding:22px 20px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">&#128218;</div>
+        <div style="font-size:13px;font-weight:600;color:#3C3489;margin-bottom:6px;">1. 底座层</div>
+        <div style="font-size:12.5px;color:#555;line-height:1.6;">把散落的学习资料变成结构化的个人知识体系</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#F0F7FE,#D6EBFD);border-radius:12px;padding:22px 20px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">&#129504;</div>
+        <div style="font-size:13px;font-weight:600;color:#0C447C;margin-bottom:6px;">2. Context 层</div>
+        <div style="font-size:12.5px;color:#555;line-height:1.6;">让AI基于你的课程、你的水平、你的考试来输出</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#EDF7F3,#CEF0E2);border-radius:12px;padding:22px 20px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">&#128640;</div>
+        <div style="font-size:13px;font-weight:600;color:#085041;margin-bottom:6px;">3. 应用层</div>
+        <div style="font-size:12.5px;color:#555;line-height:1.6;">覆盖讲解、备考、写作三大高频场景</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;padding:20px 24px;background:#FFF8EE;border-radius:12px;text-align:center;">
+    <div style="font-size:14px;color:#8A5500;line-height:1.7;">
+      &#10024; 这不是做一个"更好的 ChatGPT"，而是做一个<br>
+      <strong style="font-size:15px;">懂你的课、懂你的考试、懂你哪里不会</strong>的学习伙伴。
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <p>非洲 &amp; EE1 学生需求洞察 — 个人知识库功能规划报告（V2）</p>
+  <p style="margin-top:4px;">基于【用研洞察】学习场景机会日志跟踪研究（2026年6月）| 生成时间：2026年6月</p>
+</footer>
+
+</body>
+</html>
